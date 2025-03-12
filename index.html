@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crime Spree Leaderboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Press Start 2P', cursive;
+      padding: 20px;
+      line-height: 1.5;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: #0000A8;
+      padding: 20px;
+      border: 4px solid #fff;
+      border-radius: 4px;
+      position: relative;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 4px dashed #ff0;
+    }
+    
+    h1 {
+      color: #ff0;
+      text-shadow: 4px 4px 0px #f00;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      color: #fff;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    
+    .blink {
+      animation: blink 1s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 10px;
+    }
+    
+    thead {
+      background-color: #f00;
+      color: #fff;
+    }
+    
+    th {
+      padding: 10px;
+      text-align: center;
+      border: 2px solid #ff0;
+    }
+    
+    tbody tr.good {
+      background-color: #006400;
+    }
+    
+    tbody tr.bad {
+      background-color: #660000;
+    }
+    
+    td {
+      padding: 8px;
+      text-align: center;
+      border: 1px solid #4444ff;
+    }
+    
+    .rank-cell {
+      width: 40px;
+      font-weight: bold;
+      color: #ff0;
+    }
+    
+    .address-cell {
+      font-size: 8px;
+      color: #aaa;
+      text-align: left;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .highlight {
+      font-weight: bold;
+    }
+    
+    .positive {
+      color: #00ff00;
+    }
+    
+    .negative {
+      color: #ff6666;
+    }
+
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background-color: rgba(255, 255, 255, 0.1);
+      z-index: 10;
+      animation: scan 8s linear infinite;
+    }
+
+    @keyframes scan {
+      0% { top: 0; }
+      100% { top: 100%; }
+    }
+
+    button {
+      background-color: #ff0;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 12px;
+      margin-top: 20px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+
+    button:hover {
+      background-color: #f00;
+      color: #fff;
+    }
+
+    .refresh-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .last-updated {
+      font-size: 8px;
+      color: #aaa;
+      text-align: center;
+      margin-top: 10px;
+    }
+    
+    footer {
+      text-align: center;
+      font-size: 10px;
+      margin-top: 30px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="scan-line"></div>
+    <header>
+      <h1>CRIME<span class="blink">SPREE</span></h1>
+      <p class="subtitle">BEER IS GOOD, CIGS ARE BAD</p>
+    </header>
+    
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>RANK</th>
+            <th>WALLET ADDRESS</th>
+            <th>BEER HELD</th>
+            <th>CIGS HELD</th>
+            <th>NET SCORE</th>
+            <th>TRANSACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Row 1 - More Beer than CIGS -->
+          <tr class="good">
+            <td class="rank-cell">1</td>
+            <td class="address-cell">0x71a2c5d8eeca80f22c5b6b25864122b7e1b999a1</td>
+            <td>1,420,069</td>
+            <td>35,420</td>
+            <td class="highlight positive">+1,384,649</td>
+            <td>1,284,751</td>
+          </tr>
+          <!-- Row 2 - More Beer than CIGS -->
+          <tr class="good">
+            <td class="rank-cell">2</td>
+            <td class="address-cell">0x82b3eb482a1e8dab439ebf1f1b8b4493bd9c54f0</td>
+            <td>986,753</td>
+            <td>52,104</td>
+            <td class="highlight positive">+934,649</td>
+            <td>884,029</td>
+          </tr>
+          <!-- Row 3 - More Beer than CIGS -->
+          <tr class="good">
+            <td class="rank-cell">3</td>
+            <td class="address-cell">0x54c7e88f8916f04d57ee1fc2e6fbc04c8c3c2725</td>
+            <td>756,244</td>
+            <td>12,544</td>
+            <td class="highlight positive">+743,700</td>
+            <td>724,130</td>
+          </tr>
+          <!-- Row 4 - More Beer than CIGS -->
+          <tr class="good">
+            <td class="rank-cell">4</td>
+            <td class="address-cell">0xf4d82bc6a94c3e77d2b894bdfa8dd9342083dfb3</td>
+            <td>521,876</td>
+            <td>87,654</td>
+            <td class="highlight positive">+434,222</td>
+            <td>498,876</td>
+          </tr>
+          <!-- Row 5 - More Beer than CIGS -->
+          <tr class="good">
+            <td class="rank-cell">5</td>
+            <td class="address-cell">0x2a8b75c392d1d917743c68871f55ef0df710dc2a</td>
+            <td>428,651</td>
+            <td>32,541</td>
+            <td class="highlight positive">+396,110</td>
+            <td>430,019</td>
+          </tr>
+          <!-- Row 6 - More CIGS than Beer -->
+          <tr class="bad">
+            <td class="rank-cell">6</td>
+            <td class="address-cell">0xb475ac81ba14f75f4b42f8e12de0e9fc6376682d</td>
+            <td>51,324</td>
+            <td>372,544</td>
+            <td class="highlight negative">-321,220</td>
+            <td>388,211</td>
+          </tr>
+          <!-- Row 7 - More CIGS than Beer -->
+          <tr class="bad">
+            <td class="rank-cell">7</td>
+            <td class="address-cell">0x3a8e15a991fbbc7e89ef2f12dcc939ebcef96624</td>
+            <td>45,123</td>
+            <td>391,254</td>
+            <td class="highlight negative">-346,131</td>
+            <td>338,197</td>
+          </tr>
+          <!-- Row 8 - More CIGS than Beer -->
+          <tr class="bad">
+            <td class="rank-cell">8</td>
+            <td class="address-cell">0x91c6b45dc4dca0c38b4f368b84fb9fbcd8c21821</td>
+            <td>0</td>
+            <td>367,429</td>
+            <td class="highlight negative">-367,429</td>
+            <td>317,839</td>
+          </tr>
+          <!-- Row 9 - More CIGS than Beer -->
+          <tr class="bad">
+            <td class="rank-cell">9</td>
+            <td class="address-cell">0x724ef6bd91210de347ce48789c6fd89b0ba14a01</td>
+            <td>12,345</td>
+            <td>382,823</td>
+            <td class="highlight negative">-370,478</td>
+            <td>301,189</td>
+          </tr>
+          <!-- Row 10 - More CIGS than Beer -->
+          <tr class="bad">
+            <td class="rank-cell">10</td>
+            <td class="address-cell">0x83f2a91dd3f654e822f9a87d2a81a07bf1c805d8</td>
+            <td>3,210</td>
+            <td>416,932</td>
+            <td class="highlight negative">-413,722</td>
+            <td>273,332</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="refresh-container">
+      <button>PRESS START TO REFRESH</button>
+      <div class="last-updated">LAST UPDATED: 2025-03-11 14:30:22</div>
+    </div>
+    
+    <footer>
+      © 2025 CRIME SPREE TRACKER • BEER (0x1963fc654915aa16fa72b143b7c2c8bf5e34dc11) • CIGS (0x31ed3158681c0e4ad36ca6f9b8d71e724cf72c7c)
+    </footer>
+  </div>
+
+  <script>
+    // For a real implementation, you would fetch data from the blockchain here
+    document.querySelector('button').addEventListener('click', function() {
+      alert('Fetching latest blockchain data...');
+      // In a real implementation, you would:
+      // 1. Query all holders of both BEER and CIGS tokens
+      // 2. For each holder, calculate their net score (BEER - CIGS)
+      // 3. Sort by net score (highest to lowest)
+      // 4. Apply color coding based on if net score is positive or negative
+      // 5. Update the table with the new data
+    });
+  </script>
+</body>
+</html>
